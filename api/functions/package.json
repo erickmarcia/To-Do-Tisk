@@ -1,37 +1,51 @@
 {
-  "name": "functions",
+  "name": "to-do-tisk",
+  "version": "1.0.0",
+  "description": "Firebase Cloud Functions for ToDo App",
   "scripts": {
     "lint": "eslint --ext .js,.ts .",
-    "build": "tsc",
+    "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
+    "build": "tsup src/index.ts --out-dir dist --format cjs --target node18 --dts",
     "build:watch": "tsc --watch",
     "serve": "npm run build && firebase emulators:start --only functions",
     "shell": "npm run build && firebase functions:shell",
-    "start": "npm run shell",
+    "start": "ts-node -r tsconfig-paths/register src/index.ts",
     "deploy": "firebase deploy --only functions",
     "logs": "firebase functions:log"
   },
   "engines": {
-    "node": "22"
+    "node": "20"
   },
-  "main": "lib/index.js",
+  "main": "dist/index.js",
   "dependencies": {
     "body-parser": "^2.2.0",
     "cors": "^2.8.5",
-    "express": "^5.1.0",
-    "firebase-admin": "^12.6.0",
-    "firebase-functions": "^6.0.1"
+    "dotenv": "^17.2.0",
+    "express": "^4.18.0",
+    "express-validator": "^7.2.1",
+    "firebase-admin": "^12.7.0",
+    "firebase-functions": "^6.4.0",
+    "helmet": "^8.1.0",
+    "morgan": "^1.10.1",
+    "tsconfig-paths": "^4.2.0"
   },
   "devDependencies": {
     "@types/body-parser": "^1.19.6",
     "@types/cors": "^2.8.19",
+    "@types/dotenv": "^6.1.1",
     "@types/express": "^5.0.3",
-    "@typescript-eslint/eslint-plugin": "^5.12.0",
-    "@typescript-eslint/parser": "^5.12.0",
-    "eslint": "^8.9.0",
+    "@types/morgan": "^1.9.10",
+    "@types/node": "^24.1.0",
+    "@typescript-eslint/eslint-plugin": "^5.62.0",
+    "@typescript-eslint/parser": "^5.62.0",
+    "eslint": "^8.57.1",
     "eslint-config-google": "^0.14.0",
     "eslint-plugin-import": "^2.25.4",
+    "express": "^5.1.0",
     "firebase-functions-test": "^3.1.0",
-    "typescript": "^5.7.3"
+    "ts-node-dev": "^2.0.0",
+    "tsup": "^8.5.0",
+    "typescript": "^5.8.3"
   },
   "private": true
 }
