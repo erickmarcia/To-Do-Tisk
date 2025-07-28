@@ -1,15 +1,17 @@
-export class UserId {
-  constructor(private readonly _value: string) {
-    if (!_value || _value.trim().length === 0) {
-      throw new Error("UserId cannot be empty");
-    }
-  }
+import { v4 as uuidv4 } from "uuid";
 
-  get value(): string {
-    return this._value;
+export class UserId {
+  public readonly value: string;
+
+  constructor(id?: string) {
+    this.value = id || uuidv4();
   }
 
   equals(other: UserId): boolean {
-    return this._value === other._value;
+    return other instanceof UserId && this.value === other.value;
+  }
+
+  toString(): string {
+    return this.value;
   }
 }

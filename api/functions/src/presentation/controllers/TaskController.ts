@@ -44,8 +44,8 @@ export class TaskController {
       // res.status(200).json(task.toDTO());
       // res.status(201).json(task.toDTO());
       const taskDto: TaskDto = task.toDTO();
-      res.status(200).json(taskDto);
-      
+      // res.status(200).json(taskDto);
+      ResponseHandler.success(res, task.toDTO(), "Tarea creada exitosamente");
     } catch (error: any) {
       res.status(400).json({
         error: error.message,

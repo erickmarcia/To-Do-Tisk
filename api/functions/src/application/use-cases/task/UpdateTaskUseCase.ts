@@ -1,7 +1,7 @@
 import { ITaskRepository } from "../../interfaces/ITaskRepository";
 import { Task } from "../../../domain/entities/Task";
 import { TaskId } from "../../../domain/value-objects/TaskId";
-import { TaskStatus } from "domain/enums/TaskStatus";
+import { TaskStatus } from "../../../domain/enums/TaskStatus";
 import { UpdateTaskDto } from "presentation/dto/UpdateTaskDto";
 
 interface UpdateTaskRequest {
@@ -9,6 +9,8 @@ interface UpdateTaskRequest {
   title?: string;
   description?: string;
   status?: TaskStatus;
+  category: string;
+  priority: string;
 }
 
 export class UpdateTaskUseCase {
@@ -22,10 +24,14 @@ export class UpdateTaskUseCase {
       throw new Error("Task not found");
     }
 
-    // Actualizar los campos usando los métodos de la entidad
     if (dto.title !== undefined) existingTask.updateTitle(dto.title);
     if (dto.description !== undefined)
       existingTask.updateDescription(dto.description);
+
+    if (dto.category !== undefined) existingTask.updateCategory(dto.category);
+
+    if (dto.priority !== undefined) existingTask.updatePriority(dto.priority);
+
     if (dto.status !== undefined) {
       if (dto.status === TaskStatus.COMPLETED) {
         existingTask.markAsCompleted();

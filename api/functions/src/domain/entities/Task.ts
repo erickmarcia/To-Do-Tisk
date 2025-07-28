@@ -1,7 +1,7 @@
 import { Timestamp } from "firebase-admin/firestore";
-import { TaskId } from "../value-objects/TaskId"; 
-import { UserId } from "../value-objects/UserId"; 
-import { TaskStatus } from "domain/enums/TaskStatus";
+import { TaskId } from "../value-objects/TaskId";
+import { UserId } from "../value-objects/UserId";
+import { TaskStatus } from "../enums/TaskStatus";
 import { TaskDto } from "presentation/dto/TaskDto";
 
 export class Task {
@@ -9,6 +9,8 @@ export class Task {
   private readonly _userId: UserId;
   private _title: string;
   private _description: string;
+  private _category: string;
+  private _priority: string;
   private _status: TaskStatus;
   private readonly _createdAt: Date;
   private _updatedAt: Date;
@@ -18,6 +20,8 @@ export class Task {
     userId: string | UserId,
     title: string,
     description: string,
+    category: string,
+    priority: string,
     status: TaskStatus,
     createdAt: Date,
     updatedAt: Date
@@ -26,6 +30,8 @@ export class Task {
     this._userId = typeof userId === "string" ? new UserId(userId) : userId;
     this._title = title;
     this._description = description;
+    this._category = category;
+    this._priority = priority;
     this._status = status;
     this._createdAt = createdAt;
     this._updatedAt = updatedAt;
@@ -42,6 +48,12 @@ export class Task {
   }
   get description(): string {
     return this._description;
+  }
+  get category(): string {
+    return this._category;
+  }
+  get priority(): string {
+    return this._priority;
   }
   get status(): TaskStatus {
     return this._status;
@@ -63,6 +75,16 @@ export class Task {
 
   updateDescription(description: string): void {
     this._description = description.trim();
+    this.updateTimestamp();
+  }
+
+  updateCategory(category: string): void {
+    this._category = category.trim();
+    this.updateTimestamp();
+  }
+
+  updatePriority(priority: string): void {
+    this._priority = priority.trim();
     this.updateTimestamp();
   }
 
@@ -99,6 +121,8 @@ export class Task {
       userId: this._userId.value,
       title: this._title,
       description: this._description,
+      category: this._category,
+      priority: this._priority,
       status: this._status,
       createdAt: Timestamp.fromDate(this._createdAt),
       updatedAt: Timestamp.fromDate(this._updatedAt),
@@ -125,6 +149,8 @@ export class Task {
       data.title,
       data.description || "",
       data.status as TaskStatus,
+      data.category,
+      data.priority,
       createdAt,
       updatedAt
     );
@@ -132,7 +158,13 @@ export class Task {
 
   // Nota: Este método es para crear una nueva tarea antes de que tenga un ID de Firestore.
   // No debería aceptar 'id' como un parámetro obligatorio aquí, ya que el ID lo genera Firestore.
-  static createNew(userId: string, title: string, description: string): Task {
+  static createNew(
+    userId: string,
+    title: string,
+    description: string,
+    category: string,
+    priority: string
+  ): Task {
     if (!title || title.trim().length === 0) {
       throw new Error("Task title is required");
     }
@@ -150,6 +182,8 @@ export class Task {
       taskUserId,
       title.trim(),
       description.trim(),
+      category,
+      priority,
       TaskStatus.PENDING,
       now,
       now
@@ -162,21 +196,26 @@ export class Task {
       userId: this._userId.value,
       title: this._title,
       description: this._description,
+      category: this._category,
+      priority: this.priority,
       status: this._status,
       createdAt: this._createdAt.toISOString(),
       updatedAt: this._updatedAt.toISOString(),
     };
   }
-  
+
   toDTO(): TaskDto {
     return {
       id: this._id.value,
       userId: this._userId.value,
       title: this._title,
       description: this._description,
+      category: this._category,
+      priority: this.priority,
       status: this._status,
       createdAt: this._createdAt,
       updatedAt: this._updatedAt,
+      completed: this._status === "completed",
     };
   }
 }

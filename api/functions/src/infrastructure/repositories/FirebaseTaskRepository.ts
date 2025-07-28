@@ -1,4 +1,4 @@
-import { COLLECTIONS, db } from "config/firebase";
+import { COLLECTIONS, db } from "../../config/firebase";
 import { ITaskRepository } from "../../application/interfaces/ITaskRepository";
 import { Task } from "../../domain/entities/Task";
 import { TaskId } from "../../domain/value-objects/TaskId";
@@ -23,7 +23,7 @@ export class FirebaseTaskRepository implements ITaskRepository {
 
       // Crear nueva instancia con el ID correcto de Firestore
       return new Task(
-        new TaskId(docRef.id), 
+        new TaskId(docRef.id),
         task.userId,
         task.title,
         task.description,
@@ -78,6 +78,8 @@ export class FirebaseTaskRepository implements ITaskRepository {
             new UserId(data.userId),
             data.title,
             data.description,
+            data.category,
+            data.priority,
             data.status,
             data.createdAt.toDate(),
             data.updatedAt.toDate()
@@ -87,7 +89,6 @@ export class FirebaseTaskRepository implements ITaskRepository {
 
       return tasks;
     } catch (error) {
-      console.error("Error finding tasks by user id:", error);
       throw new Error("Failed to find tasks");
     }
   }
@@ -96,20 +97,18 @@ export class FirebaseTaskRepository implements ITaskRepository {
     try {
       const docRef = db.collection(this.collectionName).doc(id.value);
 
-      // Convertir las actualizaciones a formato Firestore
       const updateData: any = { updatedAt: new Date() };
 
       if (updates.title !== undefined) updateData.title = updates.title;
       if (updates.description !== undefined)
         updateData.description = updates.description;
-      if (updates.status !== undefined) updateData.status = updates.status; 
+      if (updates.status !== undefined) updateData.status = updates.status;
 
       await docRef.update(updateData);
 
       // Devolver la tarea actualizada
       return await this.findById(id);
     } catch (error) {
-      console.error("Error updating task:", error);
       throw new Error("Failed to update task");
     }
   }
@@ -119,7 +118,6 @@ export class FirebaseTaskRepository implements ITaskRepository {
       const docRef = db.collection(this.collectionName).doc(id.value);
       await docRef.delete();
     } catch (error) {
-      console.error("Error deleting task:", error);
       throw new Error("Failed to delete task");
     }
   }

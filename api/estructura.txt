@@ -1,0 +1,156 @@
+.
+├── .DS_Store
+├── .firebaserc
+├── .gitignore
+├── .hintrc
+├── estructura.txt
+├── firebase.json
+├── firestore-debug.log
+├── firestore.indexes.json
+├── firestore.rules
+├── functions
+│   ├── .DS_Store
+│   ├── .env
+│   ├── .eslintignore
+│   ├── .eslintrc.json
+│   ├── .gitignore
+│   ├── dist
+│   │   ├── adapters
+│   │   │   └── firestore-task.repository.js
+│   │   ├── application
+│   │   │   ├── interfaces
+│   │   │   │   ├── ITaskRepository.js
+│   │   │   │   └── IUserRepository.js
+│   │   │   └── use-cases
+│   │   │       ├── task
+│   │   │       │   ├── CreateTaskUseCase.js
+│   │   │       │   ├── DeleteTaskUseCase.js
+│   │   │       │   ├── GetTasksUseCase.js
+│   │   │       │   └── UpdateTaskUseCase.js
+│   │   │       └── users
+│   │   │           ├── CreateUserUseCase.js
+│   │   │           └── FindUserByEmailUseCase.js
+│   │   ├── config
+│   │   │   └── firebase.js
+│   │   ├── domain
+│   │   │   ├── entities
+│   │   │   │   ├── Task.js
+│   │   │   │   └── User.js
+│   │   │   ├── enums
+│   │   │   │   └── TaskStatus.js
+│   │   │   └── value-objects
+│   │   │       ├── Email.js
+│   │   │       ├── TaskId.js
+│   │   │       └── UserId.js
+│   │   ├── index.d.ts
+│   │   ├── index.js
+│   │   ├── infrastructure
+│   │   │   ├── config
+│   │   │   │   └── firebase.js
+│   │   │   ├── middleware
+│   │   │   │   ├── authMiddleware.js
+│   │   │   │   ├── errorMiddleware.js
+│   │   │   │   └── validationMiddleware.js
+│   │   │   ├── repositories
+│   │   │   │   ├── FirebaseTaskRepository.js
+│   │   │   │   └── FirebaseUserRepository.js
+│   │   │   └── web
+│   │   │       └── app.js
+│   │   ├── presentation
+│   │   │   ├── controllers
+│   │   │   │   ├── TaskController.js
+│   │   │   │   └── UserController.js
+│   │   │   ├── dto
+│   │   │   │   ├── CreateTaskDto.js
+│   │   │   │   ├── CreateUserDto.js
+│   │   │   │   ├── TaskDto.js
+│   │   │   │   └── UpdateTaskDto.js
+│   │   │   ├── routes
+│   │   │   │   ├── taskRoutes.js
+│   │   │   │   └── userRoutes.js
+│   │   │   └── validators
+│   │   │       ├── taskValidators.js
+│   │   │       └── userValidators.js
+│   │   ├── shared
+│   │   │   ├── constants
+│   │   │   │   └── messages.js
+│   │   │   ├── types
+│   │   │   │   └── common.js
+│   │   │   └── utils
+│   │   │       ├── logger.js
+│   │   │       └── response.js
+│   │   └── test-app.js
+│   ├── package-lock.json
+│   ├── package.json
+│   ├── src
+│   │   ├── .DS_Store
+│   │   ├── adapters
+│   │   │   └── firestore-task.repository.ts
+│   │   ├── application
+│   │   │   ├── interfaces
+│   │   │   │   ├── ITaskRepository.ts
+│   │   │   │   └── IUserRepository.ts
+│   │   │   └── use-cases
+│   │   │       ├── task
+│   │   │       │   ├── CreateTaskUseCase.ts
+│   │   │       │   ├── DeleteTaskUseCase.ts
+│   │   │       │   ├── GetTasksUseCase.ts
+│   │   │       │   └── UpdateTaskUseCase.ts
+│   │   │       └── users
+│   │   │           ├── CreateUserUseCase.ts
+│   │   │           └── FindUserByEmailUseCase.ts
+│   │   ├── config
+│   │   │   └── firebase.ts
+│   │   ├── domain
+│   │   │   ├── entities
+│   │   │   │   ├── Task.ts
+│   │   │   │   └── User.ts
+│   │   │   ├── enums
+│   │   │   │   └── TaskStatus.ts
+│   │   │   └── value-objects
+│   │   │       ├── Email.ts
+│   │   │       ├── TaskId.ts
+│   │   │       └── UserId.ts
+│   │   ├── index.ts
+│   │   ├── infrastructure
+│   │   │   ├── .DS_Store
+│   │   │   ├── config
+│   │   │   │   └── firebase.ts
+│   │   │   ├── middleware
+│   │   │   │   ├── authMiddleware.ts
+│   │   │   │   ├── errorMiddleware.ts
+│   │   │   │   └── validationMiddleware.ts
+│   │   │   ├── repositories
+│   │   │   │   ├── FirebaseTaskRepository.ts
+│   │   │   │   └── FirebaseUserRepository.ts
+│   │   │   └── web
+│   │   │       └── app.ts
+│   │   ├── presentation
+│   │   │   ├── controllers
+│   │   │   │   ├── TaskController.ts
+│   │   │   │   └── UserController.ts
+│   │   │   ├── dto
+│   │   │   │   ├── CreateTaskDto.ts
+│   │   │   │   ├── CreateUserDto.ts
+│   │   │   │   ├── TaskDto.ts
+│   │   │   │   └── UpdateTaskDto.ts
+│   │   │   ├── routes
+│   │   │   │   ├── taskRoutes.ts
+│   │   │   │   └── userRoutes.ts
+│   │   │   └── validators
+│   │   │       ├── taskValidators.ts
+│   │   │       └── userValidators.ts
+│   │   ├── shared
+│   │   │   ├── constants
+│   │   │   │   └── messages.ts
+│   │   │   ├── types
+│   │   │   │   └── common.ts
+│   │   │   └── utils
+│   │   │       ├── logger.ts
+│   │   │       └── response.ts
+│   │   └── test-app.ts
+│   ├── tsconfig.dev.json
+│   └── tsconfig.json
+└── Readme.md
+
+54 directories, 100 files

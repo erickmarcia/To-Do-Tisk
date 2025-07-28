@@ -1,0 +1,16 @@
+# Salida de tsup
+dist/
+lib/
+build/
+
+# Firebase artefactos
+.firebase/
+firebase-debug.log
+
+# Dependencias
+node_modules/
+
+# Archivos de configuración
+*.config.js
+*.config.cjs
+*.config.ts

@@ -7,7 +7,10 @@ export interface TaskDto {
   userId: string;
   title: string;
   description?: string;
-  status: string; 
-  createdAt: Date; 
+  category?: string;
+  priority?: string;
+  status: string;
+  createdAt: Date;
   updatedAt: Date;
+  completed: boolean;
 }

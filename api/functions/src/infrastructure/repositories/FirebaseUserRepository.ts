@@ -1,95 +1,96 @@
-import { COLLECTIONS, db } from "config/firebase";
 import { IUserRepository } from "../../application/interfaces/IUserRepository";
 import { User } from "../../domain/entities/User";
 import { Email } from "../../domain/value-objects/Email";
-import { UserId } from "../../domain/value-objects/UserId";
+
+import { getFirestore } from "firebase-admin/firestore";
+import { UniqueEntityID } from "shared/domain/UniqueEntityID";
 
 export class FirebaseUserRepository implements IUserRepository {
-  private readonly collectionName = COLLECTIONS.USERS;
+  private db: FirebaseFirestore.Firestore;
 
-  async findById(id: UserId): Promise<User | null> {
+  constructor() {
+    this.db = getFirestore();
+  }
+
+  async save(user: User): Promise<User> {
     try {
-      const docRef = db.collection(this.collectionName).doc(id.value);
-      const docSnap = await docRef.get();
+      const usersRef = this.db.collection("users");
+      const dataToSave = user.toPersistence();
 
-      if (!docSnap.exists) {
-        return null;
+      // VERIFICAMOS SI EL DOCUMENTO YA EXISTE EN FIRESTORE
+      let docRef: FirebaseFirestore.DocumentReference;
+      let isExistingUserInFirestore = false;
+
+      if (user.id && user.id.value) {
+        docRef = usersRef.doc(user.id.value);
+        const docSnapshot = await docRef.get();
+        if (docSnapshot.exists) {
+          isExistingUserInFirestore = true;
+        }
       }
 
-      const data = docSnap.data()!;
-      return new User(
-        new UserId(docSnap.id),
-        new Email(data.email),
-        data.createdAt.toDate(),
-        data.updatedAt.toDate()
-      );
+      if (isExistingUserInFirestore) {
+        await docRef!.update(dataToSave);
+      } else {
+        const newDocRef = await usersRef.add(dataToSave);
+        user.assignId(newDocRef.id);
+      }
+      return user;
     } catch (error) {
-      console.error("Error finding user by id:", error);
-      throw new Error("Failed to find user");
+      throw error;
     }
   }
 
   async findByEmail(email: Email): Promise<User | null> {
     try {
-      const querySnapshot = await db
-        .collection(this.collectionName)
+      const usersRef = this.db.collection("users");
+      const snapshot = await usersRef
         .where("email", "==", email.value)
         .limit(1)
         .get();
 
-      if (querySnapshot.empty) {
+      if (snapshot.empty) {
         return null;
       }
 
-      const doc = querySnapshot.docs[0];
-      const data = doc.data();
+      const userData = snapshot.docs[0].data();
 
-      return new User(
-        new UserId(doc.id),
-        new Email(data.email),
-        data.createdAt.toDate(),
-        data.updatedAt.toDate()
+      return User.fromPersistence(
+        snapshot.docs[0].id,
+        userData.email,
+        // userData.name,
+        userData.createdAt,
+        userData.updatedAt
       );
     } catch (error) {
-      console.error("Error finding user by email:", error);
-      throw new Error("Failed to find user");
+      throw error;
     }
   }
 
-  async save(user: User): Promise<void> {
+  async findById(id: UniqueEntityID): Promise<User | null> {
     try {
-      const docRef = db.collection(this.collectionName).doc();
-      const userData = {
-        email: user.email.value,
-        createdAt: user.createdAt,
-        updatedAt: user.updatedAt,
-      };
-
-      await docRef.set(userData);
-
-      // Asignar el ID generado al objeto user
-      Object.defineProperty(user, "_id", {
-        value: new UserId(docRef.id),
-        writable: false,
-      });
+      const doc = await this.db.collection("users").doc(id.value).get();
+      if (!doc.exists) {
+        return null;
+      }
+      const userData = doc.data();
+      return User.fromPersistence(
+        doc.id,
+        userData?.email,
+        // userData?.name,
+        userData?.createdAt,
+        userData?.updatedAt
+      );
     } catch (error) {
-      console.error("Error saving user:", error);
-      throw new Error("Failed to save user");
+      throw error;
     }
   }
 
-  async update(user: User): Promise<void> {
+  async delete(id: UniqueEntityID): Promise<void> {
     try {
-      const docRef = db.collection(this.collectionName).doc(user.id.value);
-      const updateData = {
-        email: user.email.value,
-        updatedAt: user.updatedAt,
-      };
-
-      await docRef.update(updateData);
+      await this.db.collection("users").doc(id.value).delete();
     } catch (error) {
-      console.error("Error updating user:", error);
-      throw new Error("Failed to update user");
+      throw error;
     }
   }
 }

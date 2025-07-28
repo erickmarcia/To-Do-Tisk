@@ -26,6 +26,8 @@ export class FirestoreTaskRepository implements ITaskRepository {
         task.userId,
         task.title,
         task.description,
+        task.category,
+        task.priority,
         task.status,
         task.createdAt,
         task.updatedAt
@@ -51,6 +53,8 @@ export class FirestoreTaskRepository implements ITaskRepository {
         new UserId(data.userId),
         data.title,
         data.description,
+        data.category,
+        data.priority,
         data.status,
         data.createdAt.toDate(),
         data.updatedAt.toDate()
@@ -77,7 +81,9 @@ export class FirestoreTaskRepository implements ITaskRepository {
             new UserId(data.userId),
             data.title,
             data.description,
-            data.status, 
+            data.category,
+            data.priority,
+            data.status,
             data.createdAt.toDate(),
             data.updatedAt.toDate()
           )
@@ -100,7 +106,13 @@ export class FirestoreTaskRepository implements ITaskRepository {
       if (updates.title !== undefined) updateData.title = updates.title;
       if (updates.description !== undefined)
         updateData.description = updates.description;
-      if (updates.status !== undefined) updateData.status = updates.status; 
+
+      if (updates.category !== undefined)
+        updateData.category = updates.category;
+      if (updates.priority !== undefined)
+        updateData.priority = updates.priority;
+
+      if (updates.status !== undefined) updateData.status = updates.status;
 
       await docRef.update(updateData);
 
