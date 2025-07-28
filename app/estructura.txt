@@ -1,0 +1,72 @@
+tree -I "node_modules|.git|.firebase|.dart_tool|build|cache" -a -L 6 > estructura.txt 
+.
+├── .angular
+├── .nx
+├── angular.json
+├── estructura.txt
+├── LICENSE
+├── package-lock.json
+├── package.json
+├── README.md
+├── src
+│   ├── app
+│   │   ├── app.component.html
+│   │   ├── app.component.scss
+│   │   ├── app.component.spec.ts
+│   │   ├── app.component.ts
+│   │   ├── app.config.ts
+│   │   ├── app.routes.ts
+│   │   ├── core
+│   │   │   ├── auth
+│   │   │   │   ├── auth.guard.ts
+│   │   │   │   ├── auth.service.ts
+│   │   │   │   └── user.model.ts
+│   │   │   ├── http
+│   │   │   │   ├── api.service.spec.ts
+│   │   │   │   ├── api.service.ts
+│   │   │   │   └── error.interceptor.ts
+│   │   │   └── shared
+│   │   │       ├── components
+│   │   │       │   └── confirm-dialog
+│   │   │       └── pipes
+│   │   │           ├── short-date.pipe.spec.ts
+│   │   │           └── short-date.pipe.ts
+│   │   ├── features
+│   │   │   ├── auth
+│   │   │   │   └── pages
+│   │   │   │       └── login
+│   │   │   └── tasks
+│   │   │       ├── components
+│   │   │       │   ├── task-form
+│   │   │       │   └── task-item
+│   │   │       ├── models
+│   │   │       │   └── task.ts
+│   │   │       ├── pages
+│   │   │       │   └── task-list
+│   │   │       └── services
+│   │   │           ├── task.service.spec.ts
+│   │   │           └── task.service.ts
+│   │   └── modules
+│   │       └── example-page
+│   │           ├── example-page.component.html
+│   │           ├── example-page.component.scss
+│   │           ├── example-page.component.spec.ts
+│   │           └── example-page.component.ts
+│   ├── assets
+│   │   ├── .gitkeep
+│   │   ├── images
+│   │   │   └── logo-atom-chat.png
+│   │   └── styles
+│   │       └── theme.scss
+│   ├── environments
+│   │   └── environment.ts
+│   ├── favicon.ico
+│   ├── index.html
+│   ├── main.ts
+│   └── styles.scss
+├── tailwind.config.js
+├── tsconfig.app.json
+├── tsconfig.json
+└── tsconfig.spec.json
+
+30 directories, 39 files

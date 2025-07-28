@@ -1,0 +1,90 @@
+// styles.scss - Estilos globales optimizados
+@use '@angular/material' as mat;
+
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+
+// Importar el tema personalizado
+@import './assets/styles/theme.scss';
+
+// Reset básico
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', Roboto, "Helvetica Neue", sans-serif;
+  background-color: #fafafa;
+  color: #333;
+  line-height: 1.6;
+}
+
+.success-snackbar {
+  --mdc-snackbar-container-color: #4caf50;
+  --mdc-snackbar-supporting-text-color: white;
+}
+
+.error-snackbar {
+  --mdc-snackbar-container-color: #f44336;
+  --mdc-snackbar-supporting-text-color: white;
+}
+
+// Custom scrollbar
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+
+.mat-mdc-progress-spinner {
+  --mdc-circular-progress-active-indicator-color: #ff6600; // Color primary del tema
+}
+
+// Prevenir que Tailwind interfiera con Material Components
+.mat-mdc-card,
+.mat-mdc-form-field,
+.mat-mdc-button,
+.mat-mdc-snack-bar-container {
+  border: initial;
+  border-radius: initial;
+  box-shadow: initial;
+
+  // Mantener el font-family consistente
+  font-family: inherit;
+}
+
+// Estilos específicos para evitar conflictos con Tailwind
+.mat-mdc-form-field {
+  .mat-mdc-text-field-wrapper {
+    // Prevenir que Tailwind afecte el padding
+    padding: initial !important;
+  }
+
+  .mat-mdc-form-field-input-control {
+    // Mantener la altura consistente
+    // min-height: 26px;
+  }
+}
+
+// Asegurar que los botones de Material mantengan sus estilos
+.mat-mdc-raised-button {
+  // Prevenir interferencia de Tailwind
+  border: none !important;
+  text-transform: none;
+  letter-spacing: normal;
+}

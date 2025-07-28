@@ -1,0 +1,68 @@
+.task-list-container {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+
+.app-toolbar {
+  background: white;
+  color: #333;
+
+  .task-stats span {
+    font-weight: 500;
+  }
+
+  .logout-btn {
+    color: #666;
+
+    &:hover {
+      background-color: #f5f5f5;
+    }
+  }
+}
+
+.task-form-card {
+  border-radius: 12px;
+  border: none;
+  background: white;
+}
+
+.filters-section {
+  .toggle-completed-btn {
+    height: 56px;
+    min-width: 140px;
+
+    &.active {
+      background-color: #e3f2fd;
+      color: #1976d2;
+    }
+  }
+}
+
+.loading-container {
+  .mat-mdc-progress-spinner {
+    --mdc-circular-progress-active-indicator-color: #1976d2;
+  }
+}
+
+.empty-state {
+  .empty-icon {
+    display: block;
+    margin: 0 auto 1rem;
+  }
+}
+
+.task-item-wrapper {
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

@@ -1,0 +1,52 @@
+<div class="login-container min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-indigo-100">
+  <div class="w-full max-w-md px-6">
+    <mat-card class="login-card shadow-2xl">
+      <mat-card-header class="text-center pb-6">
+        <mat-card-title class="text-2xl font-bold text-gray-800">
+          ¡Bienvenido a TaskApp
+        </mat-card-title>
+        <mat-card-subtitle class="text-gray-600 mt-2">
+          Ingrese su Email para continuar
+        </mat-card-subtitle>
+      </mat-card-header>
+
+      <mat-card-content>
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="space-y-6 pt-6">
+          <mat-form-field class="w-full" appearance="outline">
+            <mat-label>Email</mat-label>
+            <input
+              matInput
+              type="email"
+              formControlName="email"
+              placeholder="Enter your email"
+              [class.is-invalid]="loginForm.get('email')?.invalid && loginForm.get('email')?.touched"
+            >
+            <mat-error *ngIf="loginForm.get('email')?.hasError('required')">
+              Email es requerido
+            </mat-error>
+            <mat-error *ngIf="loginForm.get('email')?.hasError('email')">
+              Por favor, introduce una dirección de correo electrónico válida
+            </mat-error>
+          </mat-form-field>
+
+          <button
+            mat-raised-button
+            color="primary"
+            type="submit"
+            [disabled]="loginForm.invalid || isLoading"
+            class="w-full h-12 text-lg"
+          >
+            <mat-spinner *ngIf="isLoading" diameter="20" class="mr-2"></mat-spinner>
+            {{ isLoading ? 'Please wait...' : 'Continue' }}
+          </button>
+        </form>
+      </mat-card-content>
+
+      <mat-card-footer class="text-center pt-6">
+        <p class="text-sm text-gray-500">
+          Se pedirá a los nuevos usuarios que creen una cuenta
+        </p>
+      </mat-card-footer>
+    </mat-card>
+  </div>
+</div>

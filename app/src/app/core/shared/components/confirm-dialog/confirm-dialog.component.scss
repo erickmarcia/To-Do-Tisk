@@ -1,0 +1,31 @@
+ .confirm-dialog {
+   min-width: 300px;
+ }
+
+ .dialog-title {
+   display: flex;
+   align-items: center;
+   gap: 8px;
+   margin-bottom: 16px;
+ }
+
+ .warning-icon {
+   color: #ff9800;
+ }
+
+ .danger-icon {
+   color: #f44336;
+ }
+
+ .confirm-icon {
+   color: #2196f3;
+ }
+
+ .dialog-content {
+   margin-bottom: 16px;
+ }
+
+ .dialog-actions {
+   justify-content: flex-end;
+   gap: 8px;
+ }

@@ -1,0 +1,105 @@
+<form [formGroup]="taskForm" (ngSubmit)="onSubmit()" class="task-form">
+  <h2 *ngIf="dialogRef" mat-dialog-title class="dialog-title">
+    <mat-icon class="mr-2">{{ isEditMode ? 'edit' : 'add_task' }}</mat-icon>
+    {{ isEditMode ? 'Edit Task' : 'Create New Task' }}
+  </h2>
+
+  <div class="form-content" [attr.mat-dialog-content]="dialogRef ? '' : null">
+    <!-- Title Field -->
+    <mat-form-field class="w-full" appearance="outline">
+      <mat-label>Título de la tarea</mat-label>
+      <input
+        matInput
+        formControlName="title"
+        placeholder="Ingresar Título de la tarea"
+        maxlength="100"
+      >
+      <mat-hint align="end">{{ title?.value?.length || 0 }}/100</mat-hint>
+      <mat-error *ngIf="title?.hasError('required') && title?.touched">
+      Título es requerido
+      </mat-error>
+      <mat-error *ngIf="title?.hasError('minlength') && title?.touched">
+        Título No puede estar vacío
+      </mat-error>
+      <mat-error *ngIf="title?.hasError('maxlength') && title?.touched">
+        Título no puede exceder los 100 caracteres
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Description Field -->
+    <mat-form-field class="w-full" appearance="outline">
+      <mat-label>Description</mat-label>
+      <textarea
+        matInput
+        formControlName="description"
+        placeholder="Enter task description"
+        rows="3"
+        maxlength="500"
+      ></textarea>
+      <mat-hint align="end">{{ description?.value?.length || 0 }}/500</mat-hint>
+      <mat-error *ngIf="description?.hasError('required') && description?.touched">
+        Descripción es requerida
+      </mat-error>
+      <mat-error *ngIf="description?.hasError('minlength') && description?.touched">
+        Descripción No puede estar vacío
+      </mat-error>
+      <mat-error *ngIf="description?.hasError('maxlength') && description?.touched">
+        Descripción no puede exceder los 500 caracteres
+      </mat-error>
+    </mat-form-field>
+
+    <!-- Row for Category and Priority -->
+    <div class="form-row flex flex-col sm:flex-row gap-4">
+      <!-- Category Field -->
+      <mat-form-field class="flex-1" appearance="outline">
+        <mat-label>Categoria</mat-label>
+        <mat-select formControlName="category">
+          <mat-option value="">Ninguna</mat-option>
+          <mat-option *ngFor="let cat of categories" [value]="cat">
+            {{ cat }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <!-- Priority Field -->
+      <mat-form-field class="flex-1" appearance="outline">
+        <mat-label>Prioridad</mat-label>
+        <mat-select formControlName="priority">
+          <mat-option *ngFor="let p of priorities" [value]="p.value">
+            <div class="priority-option flex items-center">
+              <!-- <mat-icon [class]="'priority-icon ' + p.color">{{ p.icon }}</mat-icon> -->
+              <span class="ml-2">{{ p.label }}</span>
+            </div>
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <!-- Action Buttons -->
+  <div class="form-actions" [attr.mat-dialog-actions]="dialogRef ? '' : null">
+    <button
+      *ngIf="dialogRef"
+      mat-button
+      type="button"
+      (click)="onCancel()"
+      [disabled]="isSubmitting"
+    >
+      Cancelar
+    </button>
+    
+    <button
+      mat-raised-button
+      color="primary"
+      type="submit"
+      [disabled]="taskForm.invalid || isSubmitting"
+      class="submit-btn"
+    >
+      <mat-spinner *ngIf="isSubmitting" diameter="20" class="mr-2"></mat-spinner>
+      <mat-icon *ngIf="!isSubmitting" class="mr-2">
+        {{ isEditMode ? 'Guardar' : 'Agregar' }}
+      </mat-icon>
+      {{ isSubmitting ? 'Guardando...' : (isEditMode ? 'Actualizar tarea' : 'Crear tarea') }}
+    </button>
+  </div>
+</form>

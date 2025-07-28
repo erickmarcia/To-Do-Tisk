@@ -1,0 +1,102 @@
+<div class="task-list-container min-h-screen bg-gray-50">
+  <mat-toolbar class="app-toolbar shadow-md">
+    <div class="flex items-center justify-between w-full">
+      <div class="flex items-center space-x-4">
+        <h1 class="text-xl font-bold">Mis tareas</h1>
+        <div class="task-stats flex space-x-4 text-sm">
+          <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded">
+            Pendientes: {{ pendingTasksCount }}
+          </span>
+          <span class="bg-green-100 text-green-800 px-2 py-1 rounded">
+            Completadas: {{ completedTasksCount }}
+          </span>
+        </div>
+      </div>
+      
+      <div class="flex items-center space-x-4">
+        <span class="text-sm text-gray-600">{{ currentUser?.email }}</span>
+        <button mat-button (click)="logout()" class="logout-btn">
+          <mat-icon>logout</mat-icon>
+          Cerrar sesión
+        </button>
+      </div>
+    </div>
+  </mat-toolbar>
+
+  <div class="container mx-auto px-4 py-6 max-w-4xl">
+    <div class="flex justify-end mb-4">
+      <button 
+        mat-raised-button 
+        color="primary" 
+        (click)="toggleTaskFormVisibility()"
+      >
+        <mat-icon>{{ showTaskForm ? 'remove' : 'add' }}</mat-icon>
+        {{ showTaskForm ? 'Ocultar Formulario' : 'Agregar Nueva Tarea' }}
+      </button>
+    </div>
+
+    <mat-card *ngIf="showTaskForm" class="task-form-card mb-6 shadow-lg">
+      <mat-card-header>
+        <mat-card-title class="text-lg font-semibold">Agregar Nueva Tarea</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <app-task-form (taskCreated)="onTaskCreated($event)"></app-task-form>
+      </mat-card-content>
+    </mat-card>
+
+    <div class="filters-section mb-6">
+      <mat-card class="p-4">
+        <div class="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
+          <mat-form-field class="flex-1" appearance="outline">
+            <mat-label>Buscar Tareas...</mat-label>
+            <input 
+              matInput 
+              [(ngModel)]="searchTerm"
+              (input)="onSearchChange($event)"
+              placeholder="Buscar por título o descripción"
+            >
+            <mat-icon matSuffix>Buscar</mat-icon>
+          </mat-form-field>
+          
+          <button 
+            mat-stroked-button 
+            (click)="toggleShowCompleted()"
+            [class.active]="showCompleted"
+            class="toggle-completed-btn"
+          >
+            <mat-icon>{{ showCompleted ? 'visibility' : 'visibility_off' }}</mat-icon>
+            {{ showCompleted ? 'Ocultar' : 'Mostrar' }} Completas
+          </button>
+        </div>
+      </mat-card>
+    </div>
+
+    <div *ngIf="isLoading" class="loading-container text-center py-8">
+      <mat-spinner class="mx-auto"></mat-spinner>
+      <p class="mt-4 text-gray-600">Cargando sus tareas...</p>
+    </div>
+
+    <div *ngIf="!isLoading" class="tasks-grid">
+      <div *ngIf="filteredTasks.length === 0" class="empty-state text-center py-12">
+        <mat-icon class="empty-icon text-6xl text-gray-400 mb-4">asignación</mat-icon>
+        <h3 class="text-xl font-medium text-gray-600 mb-2">
+          {{ tasks.length === 0 ? 'No hay tareas todavía' : 'No hay tareas que coincidan con tu búsqueda' }}
+        </h3>
+        <p class="text-gray-500">
+          {{ tasks.length === 0 ? 'Crea tu primera tarea!' : 'Intente ajustar su búsqueda o filtros' }}
+        </p>
+      </div>
+
+      <div 
+        *ngFor="let task of filteredTasks; trackBy: trackByTaskId" 
+        class="task-item-wrapper mb-4"
+      >
+        <app-task-item
+          [task]="task"
+          (taskUpdated)="onTaskUpdated($event)"
+          (taskDeleted)="onTaskDeleted()"
+        ></app-task-item>
+      </div>
+    </div>
+  </div>
+</div>

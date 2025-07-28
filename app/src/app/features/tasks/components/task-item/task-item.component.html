@@ -1,0 +1,69 @@
+<mat-card class="task-card" [class.completed]="task.completed">
+  <div class="task-content">
+    <div class="task-header flex items-start justify-between">
+      <div class="task-main flex-1">
+        <div class="flex items-center space-x-3 mb-2">
+          <mat-checkbox
+            [checked]="task.completed"
+            [disabled]="isUpdating"
+            (change)="onToggleComplete($event)"
+            color="primary"
+          ></mat-checkbox>
+          
+          <h3 class="task-title" [class.completed-text]="task.completed">
+            {{ task.title }}
+          </h3>
+          
+          <!-- <mat-chip 
+            *ngIf="task.priority" 
+            [color]="getPriorityColor(task.priority)"
+            class="priority-chip"
+          >
+            <mat-icon [fontSet]="'material-icons'">{{ getPriorityIcon(task.priority) }}</mat-icon>
+            {{ task.priority | titlecase }}
+          </mat-chip> -->
+        </div>
+        
+        <p class="task-description" [class.completed-text]="task.completed">
+          {{ task.description }}
+        </p>
+        
+        <div class="task-meta flex items-center justify-between mt-3">
+          <div class="flex items-center space-x-4 text-sm text-gray-500">
+            <span class="flex items-center">
+              <mat-icon class="text-sm mr-1">schedule</mat-icon>
+              Created {{ task.createdAt | shortDate }}
+            </span>
+            
+            <span *ngIf="task.category" class="flex items-center">
+              <mat-icon class="text-sm mr-1">label</mat-icon>
+              {{ task.category }}
+            </span>
+          </div>
+          
+          <div class="task-actions">
+            <button
+              mat-icon-button
+              [matMenuTriggerFor]="taskMenu"
+              class="action-btn"
+              [disabled]="isUpdating"
+            >
+              <mat-icon>more_vert</mat-icon>
+            </button>
+            
+            <mat-menu #taskMenu="matMenu">
+              <button mat-menu-item (click)="onEdit()">
+                <mat-icon>edit</mat-icon>
+                <span>Editar</span>
+              </button>
+              <button mat-menu-item (click)="onDelete()" class="delete-item">
+                <mat-icon>delete</mat-icon>
+                <span>Eliminar</span>
+              </button>
+            </mat-menu>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</mat-card>

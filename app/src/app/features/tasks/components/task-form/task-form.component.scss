@@ -1,0 +1,84 @@
+.task-form {
+  .dialog-title {
+    display: flex;
+    align-items: center;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 1rem;
+
+    .mat-icon {
+      color: #1976d2;
+    }
+  }
+
+  .form-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    min-width: 400px;
+
+    @media (max-width: 640px) {
+      min-width: auto;
+    }
+  }
+
+  .form-row {
+    .mat-mdc-form-field {
+      flex: 1;
+    }
+  }
+
+  .priority-option {
+    display: flex;
+    align-items: center;
+
+    .priority-icon {
+      font-size: 18px;
+      width: 18px;
+      height: 18px;
+
+      &.primary {
+        color: #1976d2;
+      }
+
+      &.accent {
+        color: #ff9800;
+      }
+
+      &.warn {
+        color: #f44336;
+      }
+    }
+  }
+
+  .form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    margin-top: 1.5rem;
+
+    .submit-btn {
+      display: flex;
+      align-items: center;
+      min-width: 140px;
+      height: 40px;
+
+      .mat-mdc-progress-spinner {
+        --mdc-circular-progress-active-indicator-color: white;
+      }
+    }
+  }
+
+  // When not in dialog mode, add some styling
+  &:not([mat-dialog-content]) {
+    padding: 1rem;
+    background: white;
+    border-radius: 8px;
+  }
+}
+
+// Override Material Dialog styles
+.mat-mdc-dialog-container .mdc-dialog__surface {
+  border-radius: 12px;
+}
