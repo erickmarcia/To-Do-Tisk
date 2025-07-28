@@ -1,41 +1,73 @@
-# ATOM FE CHALLENGE TEMPLATE - ANGULAR
+# 📝 Angular To-Do App
 
-Este proyecto es una plantilla con lo necesario para comenzar a desarrollar el front-end de la aplicación de la prueba técnica de Atom. Se base en Angular con la versión 17.3.6.
-Se ha realizado la instalación y configuración de varias dependencias necesarias para el desarrollo de la aplicación, como por ejemplo: Angular Material.
+Aplicación web desarrollada en **Angular 17** para la gestión de tareas (To-Do list), con integración a un backend construido en Firebase Functions y Firestore.
 
-## Instrucciones
-Siéntete libre de clonar este repositorio y utilizarlo como base para el desarrollo de la aplicación. Sigue las indicates de la prueba técnica para completar la aplicación y desarrolla como más te sientas cómodo.
+---
 
-De igual manera puedes documentar dentro de este archivo todo lo que deseas contar sobre tu desarrollo, como por ejemplo, decisiones de diseño, problemas encontrados, etc.
+## 🚀 Tecnologías Utilizadas
 
-## Comentarios sobre el desarrollo
-...
+- **Angular 17**: Framework principal del frontend.
+- **TypeScript**: Tipado estático para mayor robustez.
+- **Angular Material**: UI moderna y accesible.
+- **TailwindCSS**: Estilos utilitarios para diseño rápido y responsivo.
+- **RxJS**: Manejo de flujos de datos reactivos.
+- **SweetAlert2**: Alertas personalizadas para una mejor UX.
+- **Firebase Firestore**: Base de datos en tiempo real.
+- **Firebase Functions**: API serverless para operaciones CRUD.
 
-## Development server
+---
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## 🎨 Decisiones de Diseño
 
-## Code scaffolding
+- **Arquitectura limpia y modular**: Separación clara entre vistas, servicios, modelos y componentes compartidos.
+- **Uso extensivo de Observables y Subjects**: Para asegurar reactividad y sincronización de la UI en tiempo real.
+- **Componentes reutilizables**: Diseñados para ser fácilmente adaptables a nuevos contextos.
+- **Mensajes visuales amigables**: A través de **SweetAlert2**, con confirmaciones y errores amigables.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+---
 
-## Build
+## 📁 Estructura del Proyecto
+```bash
+/ (raíz)
+src/
+├── app/
+│   ├── core/             # Servicios y lógica de negocio
+│   ├── shared/           # Componentes, pipes y directivas reutilizables
+│   ├── pages/            # Componentes de páginas
+│   ├── models/           # Interfaces y DTOs
+│   └── app-routing.module.ts
+├── assets/               # Imágenes, estilos globales, etc.
+├── environments/         # Configuración para distintos entornos
+└── README.md
+```
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+## 🧪 Cómo Ejecutar Localmente
 
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+1. Instala Node.js 20:
+```bash
+   nvm install 20
+   nvm use 20
+```
 
 
+2.	Instala las dependencias:
+```bash
+  npm install
+```
+
+3.	Inicia el servidor de desarrollo:
+```bash
+  ng serve
+```
+
+4.	Visita http://localhost:4200 para ver la app.
+
+🔐 Asegúrate de tener configurado Firebase y habilitadas las funciones necesarias.
+
+⸻
+
+📷 Capturas de Pantalla
+![alt text](src/assets/images/Panel..png)
 
 
 
